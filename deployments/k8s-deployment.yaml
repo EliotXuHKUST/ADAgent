@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adagent-server
+  labels:
+    app: adagent
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: adagent
+  template:
+    metadata:
+      labels:
+        app: adagent
+    spec:
+      containers:
+      - name: server
+        image: adagent-server:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adagent-service
+spec:
+  selector:
+    app: adagent
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: ClusterIP
