@@ -7,14 +7,21 @@
 ## Phase 1: 基础设施与数据接入 (Weeks 1-2)
 **目标**: 打通数据流，模拟生成游戏日志并成功入库。
 
+### 技术栈 (Tech Stack)
+*   **Language**: Golang 1.22+
+*   **AI Framework**: LangChainGo
+*   **Infrastructure**: Kubernetes (K8s), Docker
+*   **Messaging**: Kafka / Redpanda
+
 ### 任务列表
-1.  **后端基础 (Backend)**
-    *   [ ] 初始化 SaaS 后端项目 (FastAPI + PostgreSQL + Redis)。
-    *   [ ] 实现 API 鉴权机制 (AppID/SecretKey)。
-    *   [ ] 搭建高并发日志接收接口 (`/v1/events/collect`)，使用 Kafka/Redpanda 做削峰。
+1.  **后端基础 (Backend - Go)**
+    *   [ ] 初始化 Go Module (`go mod init github.com/EliotXuHKUST/ADAgent`).
+    *   [ ] 搭建 HTTP Server (Gin/Echo) 接收日志。
+    *   [ ] 集成 LangChainGo 用于后续 LLM 调用。
+    *   [ ] 编写 Dockerfile 和 K8s Helm Charts。
 2.  **SDK 原型 (SDK Proto)**
     *   [ ] 定义跨平台 SDK 接口规范 (C# for Unity)。
-    *   [ ] 编写一个 Python 脚本 `mock_client.py`，模拟发送 1000 QPS 的游戏战斗日志。
+    *   [ ] 编写 Go 脚本 `cmd/mock_client`，模拟发送 1000 QPS 的游戏战斗日志。
 3.  **数据清洗 (ETL)**
     *   [ ] 实现 Log Parser：将 JSON 日志扁平化并存入 ClickHouse/Postgres。
 
@@ -62,8 +69,8 @@
 *   演示视频：展示从操作到广告触发的全过程。
 
 ## 资源需求
-*   **后端开发**: 1人 (Python/FastAPI)
+*   **后端开发**: 1人 (Golang/K8s)
 *   **AI/算法**: 1人 (Prompt/Fine-tuning)
 *   **Unity 开发**: 1人 (或外包，负责 Demo 制作)
-*   **算力**: 1 台 A100/A10 (训练) + 1 台 T4/A10 (推理部署)
+*   **算力**: 1 台 A100/A10 (训练) + K8s Cluster (推理部署)
 
